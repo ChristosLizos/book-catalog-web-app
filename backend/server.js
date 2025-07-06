@@ -64,7 +64,7 @@ app.get('/books/:keyword', function(req, res) {
 });
 
 app.listen(3000, function() {
-    console.log('Server up and running on port 4000!');
+    console.log('Server up and running on port 3000!');
 
     const query = `CREATE TABLE IF NOT EXISTS books (
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,

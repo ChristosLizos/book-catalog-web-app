@@ -1,0 +1,199 @@
+<html lang="en">
+	<head>
+	 <meta charset="UTF-8">
+  	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>FRONT END</title>
+	</head>
+	<body>
+		<form id="insertBookForm">
+			
+			<p>Store the book in the systems database
+			form.</p>
+			<p>Book's Title:</p>
+			<input type="text" name="title" id ="title"placeholder="Type Book's Title"
+			/>
+			<p>Book's Author:</p>
+			<input type="text" name="author" id = "author" placeholder="Type Author's Name"
+			/>
+			<p>Book's Price:</p>
+			<input type="text"  min= "0"name="price" id = "price" placeholder="Type Book's Price" 
+			/>
+			<p>Book's Genre:</p>
+			<select name="genre" id="genre">
+			  <option value="science fiction">science fiction</option>
+			  <option value="satire">satire</option>
+			  <option value="drama">drama</option>
+			  <option value="action and adventure">action and adventure</option>
+			  <option value="Romance">romance</option>
+			  <option value="mystery">mystery</option>
+			  <option value="horror">horror</option>
+			</select> <p>
+			<p>Once you have filled the book's
+			data above, hit Submit</p>
+			<input type="submit" value="submit" id ="submitBook"/>
+			
+		</form>
+		<form id="searchBookForm">
+			<p>Search for a Book in Database:</p>
+			<input type="text" name="keyword" id ="keyword"placeholder="Search for book..."
+			/>
+			<input type="button" value="Search"id="searchByKW">
+			
+		</form>
+		<ul id="bookResults"></ul>
+    		<p id="notFoundMessage" style="display: none;">No such book in database.</p>
+
+		<script>
+		
+			
+	        window.onload = (event) => {
+		const databaseURL = "http://localhost:3000/books/";
+		
+		
+		document.getElementById('searchByKW').addEventListener('click', (event) =>{
+		
+			event.preventDefault();
+			const keyword = document.getElementById('keyword').value;
+			const searchURL = `${databaseURL}${keyword}`;
+			
+	                document.getElementById('bookResults').innerHTML = '';
+
+			
+			fetch(searchURL)
+				.then(res => {
+			      if (!res.ok) {Lord
+				throw new Error('Network response was not ok');
+			      }
+			      return res.json();
+			    })
+				.then (data => {
+					let list = document.getElementById('bookResults');
+					let notFoundMessage = document.getElementById('notFoundMessage');
+					list.innerHTML= '';
+					notFoundMessage.style.display ='none';
+					
+					if (data.length === 0) {
+        document.getElementById('notFoundMessage').style.display = 'block';
+      } else {
+        document.getElementById('notFoundMessage').style.display = 'none';
+						for(var i = 0; i < data.length; i++){
+
+         					var bookResults = `<p>   <br> id: ${data[i].id} <br> author: : ${data[i].author} <br> title' : ${data[i].title} <br> genre: : ${data[i].genre} <br> price: : ${data[i].price} <br>  <p>`;
+                        
+                        list.innerHTML += bookResults;
+                    }
+					
+					
+					
+					}		
+															
+				})
+				.catch(error =>{
+				
+					console.error("An error occured:",error);
+		
+				});
+				
+		document.getElementById("keyword").value="";	
+		
+		});//Telos searchBook	
+		
+            
+	    	function validEntry(event){//Arxh validEntry
+            
+	            	event.preventDefault();
+            
+	            	const titleInput = document.getElementById("title");
+	           	const authorInput = document.getElementById("author");
+	                const priceInput = document.getElementById("price");
+	                const genreInput = document.getElementById("genre");
+                
+	                if (!titleInput.value ||!authorInput.value || !priceInput.value||!genreInput.value){//Arxh elegxou gia null stoixeia
+	                	alert("Please enter all fields.");
+	                	clearFields();
+                		return false;
+                
+	                }//Telos elegxou gia null stoixeia
+	                
+	                if(isNaN(priceInput.value) || priceInput.value <=0){//Arxh elegou gia timh bibliou
+	                	alert("Please enter valid price (numeral and greater than zero.)");
+	                	clearFields();
+	                	return false;               
+	                	                
+	                }//telos elegxou gia timh bibliou
+	                
+	                
+
+	                const book = {author: authorInput.value, title: titleInput.value, price: priceInput.value, genre: genreInput.value
+	                };
+	                submitBook(book);
+	                
+	                return true;
+                    
+                    
+		}//telos validEntry
+		
+		function clearFields(){//Arxh clearFields 
+			document.getElementById("title").value="";
+			document.getElementById("author").value="";
+			document.getElementById("price").value="";
+			document.getElementById("genre").value="";
+		
+		
+		}//Telos clearFields()
+				
+				
+		async function submitBook(book){//Arxh SubmitBook
+		
+			try{
+			
+				const response = await fetch(databaseURL,{
+				
+				method:"POST",
+				headers:{
+				
+					"Content-type":"application/json"
+					
+					},
+				body:JSON.stringify(book)
+				});
+				
+				const data = await response.json();
+				
+				if (response.ok&& data.result == 'OK'){
+					alert("Book submitted succesfully.");
+					clearFields();
+				}else{
+				
+					alert("Failed to submit book")
+				
+				}
+			}catch(error){
+			
+				console.error("An error occured:",error);
+			
+			}
+			
+			
+			clearFields();
+				
+			
+			
+		}
+			
+		
+		
+		//Telos submit book
+		
+		document.getElementById("insertBookForm").addEventListener("submit",validEntry);
+		event.preventDefault();
+		validEntry(event);
+		};
+			  
+		</script>
+		
+	</body>
+</html>
+
+

@@ -1,33 +1,51 @@
-# Book Catalog Web App 📚
+📚 Book Catalog Web App
 
-A full-stack web application for adding and searching books in a local SQLite database. Built using:
+A full-stack web application that allows users to add and search for books stored in a local SQLite database.
+🔧 Tech Stack
 
-- **Backend**: Node.js, Express, SQLite
-- **Frontend**: HTML, CSS, JavaScript
+    Backend: Node.js, Express, SQLite
 
-## Features
+    Frontend: HTML, CSS, JavaScript
 
-✅ Add a book (title, author, genre, price)  
-✅ Search for books by title  
-✅ Stores data in a local SQLite database  
-✅ Input validation and error handling
+✨ Features
 
-## How to Run
+    ✅ Add a book (title, author, genre, price)
 
-1. Install dependencies:
-   ```bash
-   npm install
-2. Start the server:
-	node backend/server.js
+    ✅ Search for books by title
 
-3. Open in browser:
-	http://localhost:3000/books
-	
-Project Structure
+    ✅ Stores data in a local SQLite database
 
-	book-catalog-web-app/
-	├── backend/       ← Node.js server
-	├── frontend/      ← HTML + JS interface
-	├── .gitignore
-	├── README.md
+    ✅ Input validation and error handling
 
+🚀 Getting Started
+
+Run the following commands in your terminal:
+
+git clone https://github.com/ChristosLizos/book-catalog-web-app.git
+cd book-catalog-web-app/backend
+npm install
+npm start
+
+Then open your browser and go to:
+
+http://localhost:3000/books
+📁 Project Structure
+
+book-catalog-web-app/
+├── backend/            # Node.js server
+│   ├── server.js       # Main backend logic
+│   └── package.json    # Backend dependencies
+├── front_end/          # Frontend HTML, CSS, and JS
+├── README.md           # Project documentation
+
+💡 Notes
+
+    The app creates a SQLite database (BooksDatabase.sqlite3) and the books table automatically on startup.
+
+    The server serves static files from front_end/.
+
+    If port 3000 is already in use, edit server.js to use a different port.
+
+📜 License
+
+MIT © Christos Lizos
